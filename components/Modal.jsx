@@ -28,20 +28,27 @@ function Modal() {
   const [post, setPost] = useState();
   const [comment, setComment] = useState("");
   const router = useRouter();
-
+  
 //   useEffect(
 //     () =>
 //       onSnapshot(doc(db,"posts",postId), (snapshot) => {
 //         setPost(snapshot.data());
 //       }),
-//     [db]
+//     [postId]
 //   );
 
+  useEffect(
+    () =>
+      onSnapshot(doc(db,"posts",postId), (snapshot) => {
+        setPost(snapshot.data());
+      }),
+    [postId]
+  );
 
   const sendComment = async (e) => {
     e.preventDefault();
 
-    await addDoc(collection(db, "posts", postId, "comments"), {
+    await addDoc(collection(db, "posts", postId,"comments"), {
       comment: comment,
       username: session.user.name,
       tag: session.user.tag,

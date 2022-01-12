@@ -1,29 +1,36 @@
-import { getProviders, getSession, useSession } from "next-auth/react";
 import Head from "next/head";
 import Feed from "../components/Feed";
+import Sidebar from "../components/Sidebar";
+import Widgets from "../components/Widgets";
+import { getProviders, getSession, useSession } from "next-auth/react";
 import Login from "../components/Login";
 import Modal from "../components/Modal";
-import Sidebar from "../components/Sidebar";
+import { modalState } from "../atoms/modalAtom";
+import { useRecoilState } from "recoil";
 
+export default function Home({ trendingResults, followResults, providers }) {
+  const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useRecoilState(modalState);
 
-export default function Home({trendingResults,providers,followResults}) {
-  const { data: session } = useSession()
+  if (!session) return <Login providers={providers} />;
 
-  if(!session) return <Login providers={providers} />
   return (
     <div className="">
       <Head>
-        <title>Twitter</title>
+        <title>Home / Twitter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='bg-black min-h-screen flex max-[1500px] mx-auto'>
+
+      <main className="bg-black min-h-screen flex max-w-[1500px] mx-auto">
         <Sidebar />
         <Feed />
-        {/* Widgets */}
+        <Widgets
+          trendingResults={trendingResults}
+          followResults={followResults}
+        />
 
-        <Modal/>
+        {isOpen && <Modal />}
       </main>
-
     </div>
   );
 }
