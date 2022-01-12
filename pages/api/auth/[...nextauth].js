@@ -9,7 +9,6 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       synchronize: false,
     }),
-    // ...add more providers here
   ],
   callbacks: {
     async session({ session, token }) {
@@ -23,5 +22,4 @@ export default NextAuth({
     },
   },
   secret: process.env.JWT_SECRET,
-  // nn
 });
