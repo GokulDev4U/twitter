@@ -29,14 +29,6 @@ function Modal() {
   const [comment, setComment] = useState("");
   const router = useRouter();
   
-//   useEffect(
-//     () =>
-//       onSnapshot(doc(db,"posts",postId), (snapshot) => {
-//         setPost(snapshot.data());
-//       }),
-//     [postId]
-//   );
-
   useEffect(
     () =>
       onSnapshot(doc(db,"posts",postId), (snapshot) => {
